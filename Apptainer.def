@@ -1,0 +1,51 @@
+# Apptainer definition file for LOCAL TESTING on nibi (Compute Canada).
+#
+# IMPORTANT: This produces a SIF image for local validation ONLY.
+# Grand Challenge requires a DOCKER image (docker save .tar.gz), which this
+# cannot produce. Use this to verify the inference pipeline on nibi before
+# building the real Docker image on a Docker host.
+#
+# Build (on nibi):
+#   module load apptainer
+#   apptainer build --fakeroot --ignore-fakeroot-command isles26_mednext_l.sif Apptainer.def
+#
+# Run (GPU):
+#   apptainer run --nv --bind model:/opt/ml/model:ro \
+#       --bind test/input/interf0:/input:ro \
+#       --bind test/output:/output \
+#       isles26_mednext_l.sif
+#
+# NOTE: Apptainer runs as your user (not root), so the non-root 'user' account
+# and the venv steps from the Dockerfile are simplified here. The inference
+# code itself is identical.
+
+Bootstrap: docker
+From: pytorch/pytorch:2.13.0-cuda12.6-cudnn9-runtime
+
+%environment
+    export PYTHONUNBUFFERED=1
+    export PIP_NO_CACHE_DIR=1
+    export PATH="/home/user/venv/bin:${PATH}"
+    export PYTHONPATH="/opt/app/vendor:${PYTHONPATH}"
+
+# Copy the vendored packages and app code from the build directory into the
+# container. %files paths are relative to the directory containing this .def.
+%files
+    vendor /opt/app/vendor
+    app.py /opt/app/app.py
+    inference.py /opt/app/inference.py
+
+%post
+    # The base image's Python is externally managed (PEP 668) and has no
+    # ensurepip, so create a venv that inherits the system site-packages
+    # (torch + CUDA libs) WITHOUT pip, then use the inherited system pip
+    # (python -m pip) which installs into the venv and bypasses PEP 668.
+    # This mirrors the official Dockerfile exactly.
+    python -m venv --system-site-packages --without-pip /home/user/venv
+    export PATH="/home/user/venv/bin:$PATH"
+    python -m pip install --no-cache-dir --no-color \
+        numpy SimpleITK scipy scikit-image scikit-learn pandas tqdm \
+        nibabel tifffile imagecodecs pydicom requests fastapi uvicorn
+
+%runscript
+    exec /home/user/venv/bin/python /opt/app/app.py

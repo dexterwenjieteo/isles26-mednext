@@ -1,0 +1,14 @@
+numpy
+SimpleITK>=2.2.1
+scipy
+scikit-image>=0.19.3
+scikit-learn
+pandas
+tqdm
+nibabel
+tifffile
+imagecodecs
+pydicom
+requests
+fastapi
+uvicorn

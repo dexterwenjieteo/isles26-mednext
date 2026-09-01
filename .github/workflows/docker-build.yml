@@ -1,0 +1,42 @@
+name: build-container
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build container (no model — sanity check)
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          tags: isles26-mednext:ci-${{ github.sha }}
+          load: true
+          # The model/ directory is NOT baked into the image — it is mounted
+          # at runtime (/opt/ml/model). So CI can build the full image without
+          # the 2.4 GB of weights. This verifies the Dockerfile parses and all
+          # Python dependencies install cleanly.
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install ruff
+        run: pip install ruff
+      - name: Lint Python sources
+        run: ruff check app.py inference.py nnUNetTrainerMedNeXt.py

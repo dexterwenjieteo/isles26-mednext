@@ -1,0 +1,68 @@
+cff-version: 1.2.0
+message: "If you use this algorithm in your research, please cite the underlying MedNeXt architecture and nnU-Net v2 framework."
+title: "ISLES 2026 Submission — MedNeXt-L (k=5) 5-Fold Ensemble"
+version: "1.0.0"
+date-released: "2026-08-24"
+license: "MIT"
+repository-code: "https://github.com/wenjiede/isles26-mednext"
+keywords:
+  - ischemic-stroke
+  - lesion-segmentation
+  - medical-imaging
+  - deep-learning
+  - MedNeXt
+  - nnU-Net
+  - brain-mri
+authors:
+  - family-names: "Di"
+    given-names: "Wenjie"
+    affiliation: "Independent Researcher"
+type: software
+references:
+  - type: article
+    title: "MedNeXt: Transformer-driven Scaling of ConvNets for Medical Image Segmentation"
+    authors:
+      - family-names: "Roy"
+        given-names: "Saikat"
+      - family-names: "Koehler"
+        given-names: "Gregor"
+      - family-names: "Ulrich"
+        given-names: "Constantin"
+      - family-names: "Baumgartner"
+        given-names: "Michael"
+      - family-names: "Pai"
+        given-names: "Jingnan"
+      - family-names: "Kleesiek"
+        given-names: "Jens"
+      - family-names: "Jaeger"
+        given-names: "Paul"
+      - family-names: "Zhao"
+        given-names: "Liqiang"
+      - family-names: "Maier-Hein"
+        given-names: "Klaus"
+      - family-names: "Isensee"
+        given-names: "Fabian"
+      - family-names: "Jäger"
+        given-names: "Paul F."
+    journal: "arXiv preprint"
+    year: 2023
+    doi: "10.48550/arXiv.2303.09975"
+  - type: article
+    title: "nnU-Net: a self-configuring method for deep learning-based biomedical image segmentation"
+    authors:
+      - family-names: "Isensee"
+        given-names: "Fabian"
+      - family-names: "Jaeger"
+        given-names: "Paul F."
+      - family-names: "Kohl"
+        given-names: "Simon A. A."
+      - family-names: "Petersen"
+        given-names: "Jens"
+      - family-names: "Maier-Hein"
+        given-names: "Klaus H."
+    journal: "Nature Methods"
+    year: 2021
+    volume: "18"
+    number: "2"
+    pages: "203-211"
+    doi: "10.1038/s41592-020-01008-z"

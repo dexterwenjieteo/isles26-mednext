@@ -1,0 +1,85 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+.venv/
+venv/
+ENV/
+
+# Logs and temp outputs
+*.log
+*.err
+*.out
+apptainer_test_*.out
+apptainer_test_*.err
+do_test_*.out
+nohup.out
+.DS_Store
+Thumbs.db
+
+# Container images (rebuild from Dockerfile)
+*.sif
+*.tar
+*.tar.gz
+*.apptainer
+.isles26_mednext_l*
+
+# Model weights — 482 MB per checkpoint, exceeds GitHub's 100 MB per-file limit.
+# Ship as a GitHub Release asset instead (see RELEASING.md).
+model/
+model.tar.gz
+
+# Virtual envs
+.venv/
+venv/
+.python-version
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.cursor/
+
+# Test outputs (keep test/input/, ignore test/output/)
+test/output/
+test/**/output/
+test/**/outputs/
+*.nii.gz.tmp
+*.nii.gz.bak
+
+# Build artifacts
+.cache/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Secrets
+.env
+.env.local
+*.pem
+*.key
+
+# Local helper files
+local_*.sh
+local_*.py
+tmp_*
+scratch_*
