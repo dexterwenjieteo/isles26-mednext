@@ -56,10 +56,12 @@ def _find_model_dir() -> Path:
 
 
 def init_model():
-    from nnunetv2.inference.predict_from_raw_data import nnUNetPredictor
-    from nnunetv2.utilities.label_handling.label_handling import determine_num_input_channels
-    from nnunetv2.utilities.plans_handling.plans_handler import PlansManager
     from nnunet_mednext import create_mednext_v1
+    from nnunetv2.inference.predict_from_raw_data import nnUNetPredictor
+    from nnunetv2.utilities.label_handling.label_handling import (
+        determine_num_input_channels,
+    )
+    from nnunetv2.utilities.plans_handling.plans_handler import PlansManager
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"Using device: {device}")
@@ -142,7 +144,7 @@ def _load_input_image():
     )
     if not candidates:
         raise FileNotFoundError(f"No image file found in {image_dir}")
-    image_path = sorted(candidates)[0]
+    image_path = min(candidates)
     print(f"Reading input: {image_path}")
 
     sitk_image = sitk.ReadImage(image_path)

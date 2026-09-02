@@ -12,12 +12,15 @@ The MedNeXt package must be installed:
     pip install -e $SCRATCH/MedNeXt
 """
 
-from typing import Union, Tuple, List
 import torch
+from nnunetv2.training.nnUNetTrainer.nnUNetTrainer import nnUNetTrainer
 from torch import nn
 from torch._dynamo import OptimizedModule
 
-from nnunetv2.training.nnUNetTrainer.nnUNetTrainer import nnUNetTrainer
+# Default device used by the sandbox-variant trainers' constructors.
+# Computed once at import time (not at function-definition time) so it does
+# not trigger Ruff B008 ("do not call in argument defaults").
+_DEFAULT_DEVICE = torch.device("cuda")
 
 
 class nnUNetTrainerMedNeXt(nnUNetTrainer):
@@ -31,7 +34,7 @@ class nnUNetTrainerMedNeXt(nnUNetTrainer):
     @classmethod
     def build_network_architecture(cls, architecture_class_name: str,
                                    arch_init_kwargs: dict,
-                                   arch_init_kwargs_req_import: Union[List[str], Tuple[str, ...]],
+                                   arch_init_kwargs_req_import: list[str] | tuple[str, ...],
                                    num_input_channels: int,
                                    num_output_channels: int,
                                    enable_deep_supervision: bool = True) -> nn.Module:
@@ -114,7 +117,7 @@ class nnUNetTrainerMedNeXt_L_k5(nnUNetTrainerMedNeXt):
 
 class nnUNetTrainerMedNeXt_S_k3_200epochs(nnUNetTrainerMedNeXt_S_k3):
     def __init__(self, plans: dict, configuration: str, fold: int, dataset_json: dict,
-                 unpack_dataset: bool = True, device: torch.device = torch.device('cuda')):
+                 unpack_dataset: bool = True, device: torch.device = _DEFAULT_DEVICE):
         super().__init__(plans, configuration, fold, dataset_json, unpack_dataset, device)
         self.num_epochs = 200
 
@@ -123,13 +126,13 @@ class nnUNetTrainerMedNeXt_S_k3_200epochs(nnUNetTrainerMedNeXt_S_k3):
 
 class nnUNetTrainerMedNeXt_S_k3_500epochs(nnUNetTrainerMedNeXt_S_k3):
     def __init__(self, plans: dict, configuration: str, fold: int, dataset_json: dict,
-                 unpack_dataset: bool = True, device: torch.device = torch.device('cuda')):
+                 unpack_dataset: bool = True, device: torch.device = _DEFAULT_DEVICE):
         super().__init__(plans, configuration, fold, dataset_json, unpack_dataset, device)
         self.num_epochs = 500
 
 
 class nnUNetTrainerMedNeXt_S_k5_200epochs(nnUNetTrainerMedNeXt_S_k5):
     def __init__(self, plans: dict, configuration: str, fold: int, dataset_json: dict,
-                 unpack_dataset: bool = True, device: torch.device = torch.device('cuda')):
+                 unpack_dataset: bool = True, device: torch.device = _DEFAULT_DEVICE):
         super().__init__(plans, configuration, fold, dataset_json, unpack_dataset, device)
         self.num_epochs = 200

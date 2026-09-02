@@ -36,10 +36,11 @@ Key points:
 
 from contextlib import asynccontextmanager
 
-import inference
 import uvicorn
 from fastapi import FastAPI, Response, status
 from uvicorn.config import LOGGING_CONFIG
+
+import inference
 
 MODEL = None
 
