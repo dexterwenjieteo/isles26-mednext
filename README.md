@@ -2,7 +2,7 @@
 
 An inference pipeline for the [ISLES 2026](https://www.isles-challenge.org/) ischemic stroke lesion segmentation challenge, built on a **MedNeXt-L** (kernel size 5) backbone with **nnU-Net v2** training infrastructure and a **5-fold cross-validated ensemble**.
 
-> **Status:** Submitted to the ISLES 2026 Grand Challenge. 5-fold ensemble achieved a mean validation Dice score of **0.6629** on the official training set.
+> **Final result:** **4th place** in the ISLES 2026 final test phase, among **46 participating teams**. The 5-fold ensemble achieved a mean validation Dice score of **0.6629** on the official training set.
 
 ## Table of contents
 
@@ -29,6 +29,7 @@ This repository packages a self-contained Docker container that runs an nnU-Netâ
 | Spacing | 0.75 mm isotropic |
 | Tile step size | 0.5 |
 | Mean validation Dice | **0.6629** |
+| ISLES 2026 final test ranking | **4th of 46 teams** |
 | Input modality | T1 brain MRI |
 | Output | Per-voxel lesion probability mask (uint8) |
 
